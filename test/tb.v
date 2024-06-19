@@ -1,19 +1,19 @@
 `default_nettype none
 `timescale 1ns / 1ps
 
-/* This testbench just instantiates the module and makes some convenient wires
-   that can be driven / tested by the cocotb test.py.
+/* 这个测试平台仅实例化模块并创建一些方便的信号线
+   这些信号线可以被 cocotb 的 test.py 驱动/测试。
 */
 module tb ();
 
-  // Dump the signals to a VCD file. You can view it with gtkwave.
+  // 将信号转储到 VCD 文件中。你可以使用 gtkwave 查看它。
   initial begin
     $dumpfile("tb.vcd");
     $dumpvars(0, tb);
     #1;
   end
 
-  // Wire up the inputs and outputs:
+  // 连接输入和输出：
   reg clk;
   reg rst_n;
   reg ena;
@@ -23,23 +23,23 @@ module tb ();
   wire [7:0] uio_out;
   wire [7:0] uio_oe;
 
-  // Replace tt_um_example with your module name:
+  // 将 tt_um_example 替换为你的模块名：
   tt_um_example user_project (
 
-      // Include power ports for the Gate Level test:
+      // 包含门级测试的电源端口：
 `ifdef GL_TEST
       .VPWR(1'b1),
       .VGND(1'b0),
 `endif
 
-      .ui_in  (ui_in),    // Dedicated inputs
-      .uo_out (uo_out),   // Dedicated outputs
-      .uio_in (uio_in),   // IOs: Input path
-      .uio_out(uio_out),  // IOs: Output path
-      .uio_oe (uio_oe),   // IOs: Enable path (active high: 0=input, 1=output)
-      .ena    (ena),      // enable - goes high when design is selected
-      .clk    (clk),      // clock
-      .rst_n  (rst_n)     // not reset
+      .ui_in  (ui_in),    // 专用输入
+      .uo_out (uo_out),   // 专用输出
+      .uio_in (uio_in),   // IO: 输入路径
+      .uio_out(uio_out),  // IO: 输出路径
+      .uio_oe (uio_oe),   // IO: 使能路径（高电平有效: 0=输入, 1=输出）
+      .ena    (ena),      // 使能 - 当设计被选择时为高电平
+      .clk    (clk),      // 时钟
+      .rst_n  (rst_n)     // 非复位
   );
 
 endmodule

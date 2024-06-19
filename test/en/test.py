@@ -8,14 +8,14 @@ from cocotb.triggers import ClockCycles
 
 @cocotb.test()
 async def test_project(dut):
-    dut._log.info("开始")
+    dut._log.info("Start")
 
-    # 将时钟周期设置为10微秒（100 KHz）
+    # Set the clock period to 10 us (100 KHz)
     clock = Clock(dut.clk, 10, units="us")
     cocotb.start_soon(clock.start())
 
-    # 复位
-    dut._log.info("复位")
+    # Reset
+    dut._log.info("Reset")
     dut.ena.value = 1
     dut.ui_in.value = 0
     dut.uio_in.value = 0
@@ -23,17 +23,18 @@ async def test_project(dut):
     await ClockCycles(dut.clk, 10)
     dut.rst_n.value = 1
 
-    dut._log.info("测试项目行为")
+    dut._log.info("Test project behavior")
 
-    # 设置你想测试的输入值
+    # Set the input values you want to test
     dut.ui_in.value = 20
     dut.uio_in.value = 30
 
-    # 等待一个时钟周期以查看输出值
+    # Wait for one clock cycle to see the output values
     await ClockCycles(dut.clk, 1)
 
-    # 以下断言只是一个检查输出值的示例。
-    # 根据你模块的实际预期输出更改它：
+    # The following assersion is just an example of how to check the output values.
+    # Change it to match the actual expected output of your module:
     assert dut.uo_out.value == 50
 
-    # 通过更改输入值、等待一个或多个时钟周期并断言预期输出值来继续测试模块。
+    # Keep testing the module by changing the input values, waiting for
+    # one or more clock cycles, and asserting the expected output values.
